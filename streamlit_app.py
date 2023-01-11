@@ -6,7 +6,10 @@ import streamlit as st
 import mysql.connector
 from mysql.connector import Error
 import datetime
-
+import numpy as np
+from UliEngineering.SignalProcessing.Simulation import sine_wave, cosine_wave
+from matplotlib import pyplot as plt
+from datetime import datetime
 
 
 def create_connection(host_name, user_name, user_password, db_name):
@@ -24,29 +27,60 @@ def create_connection(host_name, user_name, user_password, db_name):
 
     return connection
 
-    
+# Configure the properties of the sine wave here
+frequency = 0.01 # 10 Hz sine / cosine wave
+samplerate = 1 # 10 kHz
+nseconds = 120 # Generate 1 second of data
+sine = sine_wave(frequency=frequency, samplerate=samplerate, length=nseconds)
+cosine = cosine_wave(frequency=frequency, samplerate=samplerate, length=nseconds)
+nsamples = len(sine) # How many values we have in the data arrays
 
-connection = create_connection("sql7.freesqldatabase.com", "sql7589569", "NTLDAUBVuH","sql7589569")
+print(nsamples)
 
-sqlCursor = connection.cursor()
+start_timestamp = pd.Timestamp('now')
 
-date = datetime.date(2023,1,10)
-hour = datetime.time(15,45,30)
-#INSERT INTO molde1 (DATA, HORA, P1, T1) VALUES ('2023-01-10','15:45:10','11','15')
-query = "INSERT INTO molde1 (DATA, HORA, P1, T1) VALUES ('"+date.strftime('%Y-%m-%d')+"','"+hour.strftime('%H:%M:%S')+"','12'"+",'15')"
-print(query)
-sqlCursor.execute(query)
+timedelta = pd.Timedelta(1/samplerate, 'seconds')
+timestamps =  [start_timestamp + i * timedelta for i in range(nsamples)]
 
-connection.commit()
+df = pd.DataFrame(index=timestamps, data={
+    "Sine": sine,
+    "Cosine": cosine
+})
+df.index.name = 'Timestamp'
 
-sqlCursor.execute("SELECT * FROM molde1;")
+print(df.index[0].date())
+print(df.index[0].time().replace(microsecond=0))
 
-myresult = sqlCursor.fetchall()
+# Use nice plotting style
+plt.style.use("ggplot")
+# Plot dataset
+df.plot()
+# Make figure larger
+plt.gcf().set_size_inches(10, 5)
 
-for x in myresult:
-  print(x)
+plt.show()
 
-connection.close()
+#connection = create_connection("sql7.freesqldatabase.com", "sql7589569", "NTLDAUBVuH","sql7589569")
+#
+#sqlCursor = connection.cursor()
+#
+#date = datetime.date(2023,1,10)
+#hour = datetime.time(15,45,30)
+##INSERT INTO molde1 (DATA, HORA, P1, T1) VALUES ('2023-01-10','15:45:10','11','15')
+#query = "INSERT INTO molde1 (DATA, HORA, P1, T1) VALUES ('"+date.strftime('%Y-%m-%d')+"','"+hour.strftime('%H:%M:%S')+"','12'"+",'15')"
+#print(query)
+#sqlCursor.execute(query)
+#
+#connection.commit()
+#
+#sqlCursor.execute("SELECT * FROM molde1;")
+#
+#myresult = sqlCursor.fetchall()
+#
+#for x in myresult:
+#  print(x)
+#
+#connection.close()
 
 """
 # Welcome to 
