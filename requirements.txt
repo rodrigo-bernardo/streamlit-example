@@ -1,5 +1,5 @@
 altair
 pandas
 streamlit
-sqlalchemy
-plotly.express
+SQLAlchemy
+plotly-express
