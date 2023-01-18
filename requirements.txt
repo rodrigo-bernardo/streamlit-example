@@ -2,6 +2,5 @@ altair
 pandas
 streamlit
 SQLAlchemy
-pymysql
 mysql-python
 plotly-express
