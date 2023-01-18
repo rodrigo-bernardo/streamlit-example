@@ -1,6 +1,6 @@
 altair
 pandas
 streamlit
-mysqlclient
 SQLAlchemy
+pymysql
 plotly-express
