@@ -5,7 +5,7 @@ import plotly.express as px
 import time
 
 
-conn = create_engine("mysql://sql7589569:NTLDAUBVuH@sql7.freesqldatabase.com/sql7589569?charset=utf8mb4")
+conn = create_engine("mysql+pymysql://sql7589569:NTLDAUBVuH@sql7.freesqldatabase.com/sql7589569?charset=utf8mb4")
 
 st.set_page_config(layout="wide")
 
