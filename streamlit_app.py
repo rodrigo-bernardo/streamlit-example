@@ -16,7 +16,7 @@ database = "sql7589569"
 conn = create_engine("mysql+pymysql://sql7589569:NTLDAUBVuH@sql7.freesqldatabase.com/sql7589569?charset=utf8mb4")
 c = conn.connect()
 
-#st.set_page_config(layout="wide")
+st.set_page_config(layout="wide")
 
 st.write("My First App")
 
