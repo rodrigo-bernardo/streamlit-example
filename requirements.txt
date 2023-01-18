@@ -3,3 +3,4 @@ pandas
 streamlit
 SQLAlchemy
 plotly-express
+mysql-connector-python
