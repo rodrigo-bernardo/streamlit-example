@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 try:
     # Connect to database
     cnx = mysql.connector.connect(
-        host = "sql7.freesqldatabase.com"
-        user = "sql7589569"
-        password = "NTLDAUBVuH"
+        host = "sql7.freesqldatabase.com",
+        user = "sql7589569",
+        password = "NTLDAUBVuH",
         database = "sql7589569"
     )
     # Create a function to plot the data
