@@ -27,6 +27,8 @@ st.markdown("""
     """
 , unsafe_allow_html=True)
 
+st.sidebar.markdown("Main page")
+
 st.write('Projeto "DDS"')
 
 col1, col2 = st.columns(2)
