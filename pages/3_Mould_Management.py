@@ -18,4 +18,4 @@ metadata.reflect(bind=conn)
 
 # Print the table names
 for table in metadata.tables:
-    print(table)
+    st.write(table)
