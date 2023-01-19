@@ -58,7 +58,7 @@ while True:
         st.plotly_chart(fig, use_container_width=True)
 
     with label_temperature.container():
-        t1 = str(last_row["T1"])
+        t1 = last_row["T1"]
         st.metric(label="Temperature Sensor 1#", value=t1)
         st.metric(label="Temperature Sensor 2#", value=t1)
 
