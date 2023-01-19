@@ -17,7 +17,7 @@ conn = create_engine("mysql+pymysql://sql7589569:NTLDAUBVuH@sql7.freesqldatabase
 c = conn.connect()
 
 st.set_page_config(
-    page_title="Main page",
+    page_title="Temperature",
     layout="wide")
 
 st.markdown("""
@@ -29,7 +29,7 @@ st.markdown("""
     """
 , unsafe_allow_html=True)
 
-st.write('Projeto "DDS"')
+
 
 col1, col2 = st.columns(2)
 
