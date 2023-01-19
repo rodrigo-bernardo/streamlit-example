@@ -21,7 +21,7 @@ st.set_page_config(layout="wide")
 st.markdown("""
 <style>
 div[data-testid="metric-container"] {
-   background-color: rgba(28, 131, 225, 0.1);
+   /*background-color: rgba(28, 131, 225, 0.1); */
    border: 1px solid rgba(28, 131, 225, 0.1);
    padding: 5% 5% 5% 10%;
    border-radius: 5px;
@@ -33,7 +33,7 @@ div[data-testid="metric-container"] {
 div[data-testid="metric-container"] > label[data-testid="stMetricLabel"] > div {
    overflow-wrap: break-word;
    white-space: break-spaces;
-   color: red;
+   /*color: red;*/
 }
 </style>
 """
