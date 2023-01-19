@@ -42,6 +42,7 @@ while True:
     SQL_Query = pd.read_sql('SELECT DATAHORA,T1,P1 FROM molde1', conn)
     df = pd.DataFrame(SQL_Query, columns=['DATAHORA','T1','P1'])
     data = df[["T1", "P1"]]
+    last_row = data.tail(1)
     fig = px.line(df, x="DATAHORA", y=data.columns,
         labels={
             "DATAHORA": "Data e Hora",
@@ -57,7 +58,9 @@ while True:
         st.plotly_chart(fig, use_container_width=True)
 
     with label_temperature.container():
-        st.metric(label="Temperature", value="70 °F")
+        t1 = str(last_row["T1"])
+        st.metric(label="Temperature Sensor 1#", value=t1)
+        st.metric(label="Temperature Sensor 2#", value=t1)
 
     with grafico1Todo.container():
         st.plotly_chart(fig, use_container_width=True)
