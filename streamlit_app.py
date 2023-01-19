@@ -21,7 +21,7 @@ st.set_page_config(layout="wide")
 st.markdown("""
     <style>
     div[data-testid="stMetricValue"] {
-        font-size: 5 rem;
+        font-size: 5rem;
     }
     </style>
     """
