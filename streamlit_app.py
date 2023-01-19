@@ -18,9 +18,18 @@ c = conn.connect()
 
 st.set_page_config(layout="wide")
 
-st.write("My First App")
+st.write('Projeto "DDS"')
 
-placeholder = st.empty()
+col1, col2 = st.columns(2)
+
+with col1:
+    grafico1lastMin = st.empty()
+with col2:
+    label_temperature = st.empty()
+
+
+
+grafico1Todo = st.empty()
 
 if st.button("RESET"):
     sql = text('DELETE FROM molde1;')
@@ -44,7 +53,14 @@ while True:
     fig.update_xaxes(showgrid=True, ticks="inside")
     fig.update_layout({"uirevision": "foo"}, overwrite=True)
 
-    with placeholder.container():
+    with grafico1lastMin.container():
         st.plotly_chart(fig, use_container_width=True)
+
+    with label_temperature.container():
+        st.metric(label="Temperature", value="70 °F")
+
+    with grafico1Todo.container():
+        st.plotly_chart(fig, use_container_width=True)
+
 
     time.sleep(1)
