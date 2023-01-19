@@ -27,7 +27,6 @@ div[data-testid="metric-container"] {
    border-radius: 5px;
    color: rgb(30, 103, 119);
    overflow-wrap: break-word;
-   font-size: 2.5em;
 }
 
 /* breakline for metric text         */
@@ -35,6 +34,9 @@ div[data-testid="metric-container"] > label[data-testid="stMetricLabel"] > div {
    overflow-wrap: break-word;
    white-space: break-spaces;
    /*color: red;*/
+}
+div[data-testid="metric-container"] > label[data-testid="stMetricValue"] > div {
+   font-size: 4rem;
 }
 </style>
 """
