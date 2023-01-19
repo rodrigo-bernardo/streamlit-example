@@ -66,7 +66,7 @@ while True:
 
     fig1.update_xaxes(showgrid=True, ticks="inside")
     fig1.update_layout({"uirevision": "foo"}, overwrite=True)
-    print(last_minute)
+ 
     fig2 = px.line(last_minute, x="DATAHORA", y=last_minute_data.columns,
         labels={
             "DATAHORA": "Data e Hora",
