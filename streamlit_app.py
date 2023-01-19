@@ -52,7 +52,8 @@ while True:
     df = pd.DataFrame(SQL_Query, columns=['DATAHORA','T1','P1'])
     data = df[["T1", "P1"]]
     last_row = data.tail(1)
-    fig = px.line(df, x="DATAHORA", y=data.columns,
+    last_minute = data.tail(60)
+    fig1 = px.line(df, x="DATAHORA", y=data.columns,
         labels={
             "DATAHORA": "Data e Hora",
             "value" : "Valor",
@@ -60,11 +61,22 @@ while True:
         },
         title='P1 and T1 sensor values')
 
-    fig.update_xaxes(showgrid=True, ticks="inside")
-    fig.update_layout({"uirevision": "foo"}, overwrite=True)
+    fig1.update_xaxes(showgrid=True, ticks="inside")
+    fig1.update_layout({"uirevision": "foo"}, overwrite=True)
+
+    fig2 = px.line(df, x="DATAHORA", y=last_minute.columns,
+        labels={
+            "DATAHORA": "Data e Hora",
+            "value" : "Valor",
+            "variable" : "Legenda"
+        },
+        title='P1 and T1 sensor values (last minute)')
+
+    fig2.update_xaxes(showgrid=True, ticks="inside")
+    fig2.update_layout({"uirevision": "foo"}, overwrite=True)
 
     with grafico1lastMin.container():
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig2, use_container_width=True)
 
     with label_temperature.container():
         t1 = last_row["T1"]
@@ -72,7 +84,7 @@ while True:
         st.metric(label="Temperature Sensor 2#", value=t1)
 
     with grafico1Todo.container():
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig1, use_container_width=True)
 
 
     time.sleep(1)
