@@ -16,6 +16,15 @@ metadata = MetaData()
 # Reflect the tables
 metadata.reflect(bind=conn)
 
+options = []
 # Print the table names
 for table in metadata.tables:
-    st.write(table)
+    options.append(table)
+
+options.append("Add a new mould")
+
+selected_option = st.selectbox(label="Select a mould", options=options)
+
+if selected_option == "Add a new mould":
+    st.text_input(label="Insert the name for the new mould")
+    st.button(label="Done")
