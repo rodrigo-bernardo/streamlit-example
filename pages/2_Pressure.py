@@ -7,13 +7,13 @@ import time
 #import mysql.connector
 
 # database connection information
-host = "sql7.freesqldatabase.com"
-user = "sql7589569"
-password = "NTLDAUBVuH"
-database = "sql7589569"
+host = "127.0.0.1"
+user = "root"
+password = ".,Descobre123"
+database = "ddsua2023"
 
 
-conn = create_engine("mysql+pymysql://sql7589569:NTLDAUBVuH@sql7.freesqldatabase.com/sql7589569?charset=utf8mb4")
+conn = create_engine("mysql+pymysql://root:.,Descobre123@127.0.0.1/ddsua2023?charset=utf8mb4")
 c = conn.connect()
 
 st.set_page_config(
