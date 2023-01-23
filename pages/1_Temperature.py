@@ -50,9 +50,9 @@ if st.button("RESET"):
     
 
 while True:
-    SQL_Query = pd.read_sql('SELECT DATAHORA,T1,P1 FROM molde1', conn)
-    df = pd.DataFrame(SQL_Query, columns=['DATAHORA','T1','P1'])
-    data = df[["T1", "P1"]]
+    SQL_Query = pd.read_sql('SELECT DATAHORA,T1,T2 FROM molde1', conn)
+    df = pd.DataFrame(SQL_Query, columns=['DATAHORA','T1','T2'])
+    data = df[["T1", "T2"]]
     last_row = data.tail(1)
     last_minute_data = data.tail(60)
     last_minute = df.tail(60)
@@ -62,7 +62,7 @@ while True:
             "value" : "Valor",
             "variable" : "Legenda"
         },
-        title='P1 and T1 sensor values')
+        title='T1 and T2 sensor values')
 
     fig1.update_xaxes(showgrid=True, ticks="inside")
     fig1.update_layout({"uirevision": "foo"}, overwrite=True)
@@ -73,7 +73,7 @@ while True:
             "value" : "Valor",
             "variable" : "Legenda"
         },
-        title='P1 and T1 sensor values (last minute)')
+        title='T1 and T2 sensor values (last minute)')
 
     fig2.update_xaxes(showgrid=True, ticks="inside")
     fig2.update_layout({"uirevision": "foo"}, overwrite=True)
@@ -83,8 +83,9 @@ while True:
 
     with label_temperature.container():
         t1 = last_row["T1"]
+        t2 = last_row["T2"]
         st.metric(label="Temperature Sensor 1#", value=t1)
-        st.metric(label="Temperature Sensor 2#", value=t1)
+        st.metric(label="Temperature Sensor 2#", value=t2)
 
     with grafico1Todo.container():
         st.plotly_chart(fig1, use_container_width=True)
