@@ -39,22 +39,36 @@ df = pd.DataFrame(SQL_Query, columns=['id','name','A','B','C'])
 
 moldes = df['name'].values.tolist()
 moldes.insert(0,"")
-select_mould = st.selectbox("Select the mould:",options=moldes)
+idx = 0
+if 'selected_mould' in st.session_state:
+    idx = moldes.index(st.session_state['selected_mould'])
+    
+select_mould = st.selectbox("Select the mould:",options=moldes,index=idx)
+st.session_state['selected_mould'] = select_mould
+
+idx = 0
 if select_mould != "":
     SQL_Query = pd.read_sql("SELECT * FROM ensaios WHERE molde = '" + select_mould+"'", conn)
     df_ensaios = pd.DataFrame(SQL_Query, columns=['id','molde','id_molde','name'])
     ensaios = df_ensaios['name'].values.tolist()
     ensaios.insert(0,"")
-    select_ensaio = st.selectbox("Select the sample:",options=ensaios)
+    if ('selected_test' in st.session_state) and (st.session_state['selected_test'] in ensaios):
+        idx = ensaios.index(st.session_state['selected_test'])
+    select_ensaio = st.selectbox("Select the sample:",options=ensaios,index=idx)
+    st.session_state['selected_test'] = select_ensaio
 
 grafico1Todo = st.empty()
 
-if st.button("RESET"):
-    sql = text('DELETE FROM molde1;')
-    result = conn.execute(sql)
-    sql = text('ALTER TABLE molde1 AUTO_INCREMENT = 1;')
-    result = conn.execute(sql)
-    
+if select_mould == "":
+    st.session_state['selected_test'] = ""
+    select_ensaio = ""
+
+if select_ensaio != "":
+    if st.button("RESET", key=1):
+        sql = text('DELETE FROM '+select_ensaio+';')
+        result = conn.execute(sql)
+        sql = text('ALTER TABLE '+select_ensaio+' AUTO_INCREMENT = 1;')
+        result = conn.execute(sql)
 
 while select_ensaio != "":
     SQL_Query = pd.read_sql("SELECT DATAHORA,T1,T2,P1,P2,D1,D2,D3,ACCX,ACCY,ACCZ,DEF FROM "+select_ensaio+"", conn)

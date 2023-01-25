@@ -38,57 +38,53 @@ with col1:
 with col2:
     label_temperature = st.empty()
 
-
-
 grafico1Todo = st.empty()
 
-if st.button("RESET"):
-    sql = text('DELETE FROM molde1;')
-    result = conn.execute(sql)
-    sql = text('ALTER TABLE molde1 AUTO_INCREMENT = 1;')
-    result = conn.execute(sql)
+select_test = ""
+if ('selected_test' in st.session_state):
+    select_test = st.session_state['selected_test']
+
+if select_test != "":
+    while True:
+        SQL_Query = pd.read_sql('SELECT DATAHORA,T1,T2 FROM '+select_test+';', conn)
+        df = pd.DataFrame(SQL_Query, columns=['DATAHORA','T1','T2'])
+        data = df[["T1", "T2"]]
+        last_row = data.tail(1)
+        last_minute_data = data.tail(60)
+        last_minute = df.tail(60)
+        fig1 = px.line(df, x="DATAHORA", y=data.columns,
+            labels={
+                "DATAHORA": "Data e Hora",
+                "value" : "Valor",
+                "variable" : "Legenda"
+            },
+            title='T1 and T2 sensor values')
+
+        fig1.update_xaxes(showgrid=True, ticks="inside")
+        fig1.update_layout({"uirevision": "foo"}, overwrite=True)
     
+        fig2 = px.line(last_minute, x="DATAHORA", y=last_minute_data.columns,
+            labels={
+                "DATAHORA": "Data e Hora",
+                "value" : "Valor",
+                "variable" : "Legenda"
+            },
+            title='T1 and T2 sensor values (last minute)')
 
-while True:
-    SQL_Query = pd.read_sql('SELECT DATAHORA,T1,T2 FROM molde1', conn)
-    df = pd.DataFrame(SQL_Query, columns=['DATAHORA','T1','T2'])
-    data = df[["T1", "T2"]]
-    last_row = data.tail(1)
-    last_minute_data = data.tail(60)
-    last_minute = df.tail(60)
-    fig1 = px.line(df, x="DATAHORA", y=data.columns,
-        labels={
-            "DATAHORA": "Data e Hora",
-            "value" : "Valor",
-            "variable" : "Legenda"
-        },
-        title='T1 and T2 sensor values')
+        fig2.update_xaxes(showgrid=True, ticks="inside")
+        fig2.update_layout({"uirevision": "foo"}, overwrite=True)
 
-    fig1.update_xaxes(showgrid=True, ticks="inside")
-    fig1.update_layout({"uirevision": "foo"}, overwrite=True)
- 
-    fig2 = px.line(last_minute, x="DATAHORA", y=last_minute_data.columns,
-        labels={
-            "DATAHORA": "Data e Hora",
-            "value" : "Valor",
-            "variable" : "Legenda"
-        },
-        title='T1 and T2 sensor values (last minute)')
+        with grafico1lastMin.container():
+            st.plotly_chart(fig2, use_container_width=True)
 
-    fig2.update_xaxes(showgrid=True, ticks="inside")
-    fig2.update_layout({"uirevision": "foo"}, overwrite=True)
+        with label_temperature.container():
+            t1 = last_row["T1"]
+            t2 = last_row["T2"]
+            st.metric(label="Temperature Sensor 1#", value=t1)
+            st.metric(label="Temperature Sensor 2#", value=t2)
 
-    with grafico1lastMin.container():
-        st.plotly_chart(fig2, use_container_width=True)
-
-    with label_temperature.container():
-        t1 = last_row["T1"]
-        t2 = last_row["T2"]
-        st.metric(label="Temperature Sensor 1#", value=t1)
-        st.metric(label="Temperature Sensor 2#", value=t2)
-
-    with grafico1Todo.container():
-        st.plotly_chart(fig1, use_container_width=True)
+        with grafico1Todo.container():
+            st.plotly_chart(fig1, use_container_width=True)
 
 
-    time.sleep(1)
+        time.sleep(1)
