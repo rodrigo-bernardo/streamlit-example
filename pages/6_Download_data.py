@@ -44,8 +44,7 @@ if select_test != "":
         conn = create_engine("mysql+pymysql://root:123456789@127.0.0.1/ddsua?charset=utf8mb4")
         string_query = "SELECT * FROM "+select_test+" WHERE datahora BETWEEN '" + str1 +"' AND '" + str2 +"'"
         string_query = string_query.replace("/","-")
-        print(string_query)
-        SQL_Query = pd.read_sql(string_query, conn)
+        SQL_Query = pd.read_sql_query(sql=text(string_query), con=conn.connect())
         df = pd.DataFrame(SQL_Query)#, columns=['DATAHORA','T1','T2'])
         df = df.set_index('id')
         csv = df.to_csv().encode('utf-8')

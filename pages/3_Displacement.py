@@ -46,7 +46,7 @@ if ('selected_test' in st.session_state):
 if select_test != "":
     while True:
         query = 'SELECT DATAHORA,D1,D2,D3 FROM '+select_test+';'
-        SQL_Query = pd.read_sql(sql=text(query), con=conn.connect())
+        SQL_Query = pd.read_sql_query(sql=text(query), con=conn.connect())
         df = pd.DataFrame(SQL_Query, columns=['DATAHORA','D1','D2','D3'])
         data = df[["D1", "D2", "D3"]]
         last_row = data.tail(1)
