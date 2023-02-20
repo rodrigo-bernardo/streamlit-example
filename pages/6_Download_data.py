@@ -51,6 +51,9 @@ if select_test != "":
 
         st.markdown("Data header preview:")
         st.write(df.head())
+        st.markdown("Data tail preview:")
+        st.write(df.tail())
+
 
         st.download_button(
             label="Download data as CSV",
