@@ -69,7 +69,7 @@ with st.expander("Click to see witch moulds and settings are present."):
                     st.experimental_rerun()
 
 with st.expander("Click to add a new mould."):
-    conn = create_engine("mysql+pymysql://root:.,Descobre123@127.0.0.1/ddsua2023?charset=utf8mb4")
+    conn = create_engine("mysql+pymysql://root:123456789@localhost/ddsua?charset=utf8mb4")
     col1, in1, in2, in3 = st.columns([3,1,1,1])
     l1 = []
     with col1:

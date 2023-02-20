@@ -16,13 +16,13 @@ st.title("Homepage")
 st.write('Projeto "DDS"')
 
 # database connection information
-host = "127.0.0.1"
+host = "localhost"
 user = "root"
 password = "123456789"
 database = "ddsua"
 
 
-conn = create_engine("mysql+pymysql://root:.,Descobre123@127.0.0.1/ddsua2023?charset=utf8mb4")
+conn = create_engine("mysql+pymysql://root:123456789@localhost/ddsua?charset=utf8mb4")
 c = conn.connect()
 select_ensaio = ""
 st.markdown("""
@@ -34,7 +34,8 @@ st.markdown("""
     """
 , unsafe_allow_html=True)
 
-SQL_Query = pd.read_sql('SELECT * FROM moldes', conn)
+query = 'SELECT * FROM moldes'
+SQL_Query = pd.read_sql_query(sql=text(query), con=conn.connect())
 df = pd.DataFrame(SQL_Query, columns=['id','name','A','B','C'])
 
 moldes = df['name'].values.tolist()

@@ -12,7 +12,7 @@ user = "root"
 password = "123456789"
 database = "ddsua"
 
-conn = create_engine("mysql+pymysql://root:.,Descobre123@127.0.0.1/ddsua2023?charset=utf8mb4")
+conn = create_engine("mysql+pymysql://root:123456789@localhost/ddsua?charset=utf8mb4")
 c = conn.connect()
 
 st.set_page_config(
