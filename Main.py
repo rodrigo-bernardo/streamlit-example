@@ -49,7 +49,8 @@ st.session_state['selected_mould'] = select_mould
 
 idx = 0
 if select_mould != "":
-    SQL_Query = pd.read_sql("SELECT * FROM ensaios WHERE molde = '" + select_mould+"'", conn)
+    query = "SELECT * FROM ensaios WHERE molde = '" + select_mould+"'"
+    SQL_Query = pd.read_sql_query(sql=text(query), con=conn.connect())
     df_ensaios = pd.DataFrame(SQL_Query, columns=['id','molde','id_molde','name'])
     ensaios = df_ensaios['name'].values.tolist()
     ensaios.insert(0,"")
@@ -72,7 +73,8 @@ if select_ensaio != "":
         result = conn.execute(sql)
 
 while select_ensaio != "":
-    SQL_Query = pd.read_sql("SELECT DATAHORA,T1,T2,P1,P2,D1,D2,D3,ACCX,ACCY,ACCZ,DEF FROM "+select_ensaio+"", conn)
+    query = "SELECT DATAHORA,T1,T2,P1,P2,D1,D2,D3,ACCX,ACCY,ACCZ,DEF FROM "+select_ensaio+""
+    SQL_Query = pd.read_sql(sql=text(query), con=conn.connect())
     df = pd.DataFrame(SQL_Query, columns=['DATAHORA','T1','T2','P1','P2','D1','D2','D3','ACCX','ACCY','ACCZ','DEF'])
     data = df[['T1','T2','P1','P2','D1','D2','D3','ACCX','ACCY','ACCZ','DEF']]
     last_row = data.tail(1)
