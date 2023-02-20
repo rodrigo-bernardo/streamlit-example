@@ -41,7 +41,7 @@ if select_test != "":
         st.write("The selected interval is not possible.")
     else:
         st.write("The selected interval is from ",d1,t1,"to ",d2,t2)
-        conn = create_engine("mysql+pymysql://root:.,Descobre123@127.0.0.1/ddsua2023?charset=utf8mb4")
+        conn = create_engine("mysql+pymysql://root:123456789@127.0.0.1/ddsua?charset=utf8mb4")
         string_query = "SELECT * FROM "+select_test+" WHERE datahora BETWEEN '" + str1 +"' AND '" + str2 +"'"
         string_query = string_query.replace("/","-")
         print(string_query)
