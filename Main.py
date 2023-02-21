@@ -67,10 +67,12 @@ if select_mould == "":
 
 if select_ensaio != "":
     if st.button("RESET", key=1):
-        sql = text('DELETE FROM '+select_ensaio+';')
-        result = conn.execute(sql)
-        sql = text('ALTER TABLE '+select_ensaio+' AUTO_INCREMENT = 1;')
-        result = conn.execute(sql)
+        with conn.connect() as connection:
+            sql = text('DELETE FROM '+select_ensaio+';')
+            result = connection.execute(sql)
+            sql = text('ALTER TABLE '+select_ensaio+' AUTO_INCREMENT = 1;')
+            result = connection.execute(sql)
+            connection.commit()
 
 while select_ensaio != "":
     query = "SELECT DATAHORA,T1,T2,P1,P2,D1,D2,D3,ACCX,ACCY,ACCZ,DEF FROM "+select_ensaio+""
