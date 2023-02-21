@@ -31,7 +31,8 @@ conn = None
 
 with st.expander("Click to see witch moulds and settings are present."):
     conn = create_engine("mysql+pymysql://root:123456789@127.0.0.1/ddsua?charset=utf8mb4")
-    SQL_Query = pd.read_sql('SELECT * FROM moldes;', conn)
+    query = 'SELECT * FROM moldes;'
+    SQL_Query = pd.read_sql(sql=text(query), con=conn.connect())
     df = pd.DataFrame(SQL_Query, columns=['id','name','A','B','C'])
     st.dataframe(df)
     st.button("Edit", key = 0, on_click=btn_edit)
@@ -57,7 +58,9 @@ with st.expander("Click to see witch moulds and settings are present."):
             st.header("")
             if st.button("Delete mould", key = "btn_delete"):
                 sql = text('DELETE FROM moldes WHERE name="'+selected_mould+'";')
-                result = conn.execute(sql)
+                with conn.connect() as connection:
+                    result = connection.execute(sql)
+                    connection.commit()
                 st.experimental_rerun()
 
         l2 = df.iloc[idx].to_list()[2:]
@@ -65,7 +68,9 @@ with st.expander("Click to see witch moulds and settings are present."):
             with empty1:
                 if st.button("Save"):
                     sql = text('UPDATE moldes SET A = '+ str(l1[0]) + ', B = ' + str(l1[1]) + ', C = ' + str(l1[2]) + ' WHERE name = "' + selected_mould + '";')
-                    result = conn.execute(sql)
+                    with conn.connect() as connection:
+                        result = connection.execute(sql)
+                        connection.commit()
                     st.experimental_rerun()
 
 with st.expander("Click to add a new mould."):
@@ -90,5 +95,7 @@ with st.expander("Click to add a new mould."):
 
     if st.button("Add new mould",disabled=ena):
         sql = text('INSERT INTO moldes (name, A, B, C) VALUES ("'+mould_name+'", '+str(l1[0])+', '+str(l1[1])+', '+str(l1[2])+');')
-        result = conn.execute(sql)
+        with conn.connect() as connection:
+            result = connection.execute(sql)
+            connection.commit()
         st.experimental_rerun()
