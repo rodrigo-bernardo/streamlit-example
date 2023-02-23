@@ -99,3 +99,5 @@ with st.expander("Click to add a new mould."):
             result = connection.execute(sql)
             connection.commit()
         st.experimental_rerun()
+
+st.session_state['previus_page'] = "management"

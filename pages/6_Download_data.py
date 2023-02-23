@@ -62,3 +62,4 @@ if select_test != "":
             mime='text/csv',
         )
     
+st.session_state['previus_page'] = "download"
